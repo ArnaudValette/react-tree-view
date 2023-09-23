@@ -14,16 +14,17 @@ function MenuToggle(props: PropsWithChildren & { className?: string }) {
     setToggle(2)
   }
   return toggle !== 2 ? (
-    <FloatingMenu
-      trigger={trig}
+    <div
+      onAnimationEnd={trig}
       className={
         toggle === 0
           ? "default-menu-toggle"
           : "default-menu-toggle default-menu-toggle-animation"
       }
+      onClick={() => setToggle(1)}
     >
-      <div onClick={() => setToggle(1)}>+</div>
-    </FloatingMenu>
+      <FloatingMenu>+</FloatingMenu>
+    </div>
   ) : (
     <>{props.children}</>
   )

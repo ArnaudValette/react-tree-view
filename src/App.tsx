@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <MenuToggle>
-        <FloatingMenu className="EffectZone" showFancyLabel trigger={() => {}}>
+        <FloatingMenu className="EffectZone" showFancyLabel>
           <ul>
             <li>users</li>
             <li>documents</li>

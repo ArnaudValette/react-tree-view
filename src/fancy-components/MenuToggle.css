@@ -1,13 +1,18 @@
 .default-menu-toggle{
-        background: rgba(22,27,61,.3);
-        border-radius: 10px;
-        padding: 10px;
-        border: 1px solid #565b8d;
-        margin: auto auto;
-        color: white;
-        display: flex;
-        font-size: 18pt;
-        transition: .5s background, .5s color;
+    background: rgba(22,27,61,.3);
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #565b8d;
+    margin: auto auto;
+    color: white;
+    display: flex;
+    font-size: 18pt;
+    transition: .5s background, .5s color;
+}
+
+.default-menu-toggle:hover{
+    cursor: pointer;
+    border-color: #767bbd;
 }
 
 .default-menu-toggle-animation{

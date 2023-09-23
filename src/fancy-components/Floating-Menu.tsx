@@ -9,18 +9,13 @@ enum Orientations {
 
 function FloatingMenu(
   props: PropsWithChildren & {
-    className: string
+    className?: string
     showFancyLabel?: boolean
-    trigger: Function
   }
 ) {
   const style = useFloating()
   return (
-    <div
-      style={style.s}
-      className={props.className}
-      onAnimationEnd={() => props.trigger()}
-    >
+    <div style={style.s} className={props.className || ""}>
       {props.children}
     </div>
   )
