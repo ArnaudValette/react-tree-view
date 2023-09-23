@@ -11,19 +11,22 @@ enum ToggleStates {
 function MenuToggle(props: PropsWithChildren & { className?: string }) {
   const [toggle, setToggle] = useState<ToggleStates>(0)
   function trig() {
-    setToggle(2)
+    if (toggle === 1) {
+      setToggle(2)
+    }
   }
   return toggle !== 2 ? (
-    <div
-      onAnimationEnd={trig}
-      className={
-        toggle === 0
-          ? "default-menu-toggle"
-          : "default-menu-toggle default-menu-toggle-animation"
-      }
-      onClick={() => setToggle(1)}
-    >
-      <FloatingMenu>+</FloatingMenu>
+    <div className="wrapper" onClick={() => setToggle(1)}>
+      <FloatingMenu
+        onAnimationEnd={trig}
+        className={
+          toggle === 0
+            ? "default-menu-toggle"
+            : "default-menu-toggle default-menu-toggle-animation"
+        }
+      >
+        +
+      </FloatingMenu>
     </div>
   ) : (
     <>{props.children}</>

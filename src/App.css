@@ -21,50 +21,54 @@ body{
     position: absolute;
 }
 
-    .EffectZone{
-        width: 85%;
-        background: rgba(22,27,61,.3);
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border: 1px solid #565b8d;
-        margin: auto auto;
-        color: white;
-        display: flex;
-        font-size: 18pt;
+.EffectZone{
+    background: rgba(22,27,61,.3);
+    border-radius: 10px;
+    border: 1px solid #565b8d;
+    margin: auto auto;
+    color: white;
+    display: flex;
+    font-size: 18pt;
+    padding: 20px;
 
-    }
-    .EffectZone ul li{
-        list-style-type: none;
-    }
-    ul{
-        text-justify: left;
-        text-align: left;
-        padding: 15%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
+}
+.EffectZone ul li{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ul{
+    text-justify: left;
+    text-align: left;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
 @media only screen and (min-width: 960px){
     .EffectZone{
-        height: 75%;
-        width: 85%;
-        background: green;
     }
 }
 
 @media only screen and (min-width: 1200px){
     .EffectZone{
-        height: 75%;
-        width: 85%;
-        background: yellow;
     }
 }
 
 @media only screen and (min-width: 1500px){
     .EffectZone{
-        height: 75%;
-        width: 85%;
-        background: orange;
+    }
+}
+
+@keyframes appear{
+    0%{
+        transform: scale(0.0001);
+    }
+    50%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1) translate(-100px, 0px);
     }
 }

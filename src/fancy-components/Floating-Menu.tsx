@@ -11,11 +11,20 @@ function FloatingMenu(
   props: PropsWithChildren & {
     className?: string
     showFancyLabel?: boolean
+    onAnimationEnd?: Function
   }
 ) {
   const style = useFloating()
   return (
-    <div style={style.s} className={props.className || ""}>
+    <div
+      style={style.s}
+      onAnimationEnd={() => {
+        if (props.onAnimationEnd) {
+          return props.onAnimationEnd()
+        }
+      }}
+      className={props.className || ""}
+    >
       {props.children}
     </div>
   )
