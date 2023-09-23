@@ -1,0 +1,68 @@
+{
+    "listA":{
+        "type":"heading",
+        "display":"People",
+        "children":{
+            "type":"profiles",
+            "ElementA":{
+                "type":"profile",
+                "name":"Adam",
+                "surname": "Fine"
+            },
+            "ElementB":{
+                "type":"profile",
+                "name":"Lola",
+                "surname": "Aspelt"
+            },
+            "ElementC":{
+                "type":"profile",
+                "name":"Ivy",
+                "surname": "Lenhart"
+            }
+        }
+    },
+    "listB":{
+        "type":"heading",
+        "display":"Files",
+        "children":{
+            "type":"file-system",
+            "ElementA":{
+                "type":"folder",
+                "display": "Images",
+                "children": {
+                    "type":"file-system",
+                    "Image1":{
+                        "type":"image",
+                        "data":""
+                    },
+                    "Image2":{
+                        "type":"image",
+                        "data":""
+                    }
+                }
+            },
+            "ElementB":{
+                "type":"folder",
+                "Document1":{
+                    "type":"paragraph",
+                    "data":"sdlkfjs sldkfjs fsladkjfas"
+                },
+                "Document2":{
+                    "type":"paragraph",
+                    "data":"sdfs dsfjendvdslvkaoe dflwejo cjkslfew;ds fdskfekfdsjf "
+                }
+            }
+        }
+            },
+    "listC":{
+        "type":"heading",
+        "display":"About",
+        "children":{
+            "type":"article",
+            "Article1":{
+                "type":"paragraph",
+                "data":"This is an article."
+            }
+        }
+        }
+}
