@@ -3,19 +3,22 @@
         "type":"heading",
         "display":"People",
         "children":{
-            "type":"profiles",
             "ElementA":{
                 "type":"profile",
+                "picture":"1.png",
                 "name":"Adam",
                 "surname": "Fine"
             },
             "ElementB":{
                 "type":"profile",
+                "picture":"2.png",
                 "name":"Lola",
                 "surname": "Aspelt"
             },
             "ElementC":{
                 "type":"profile",
+                "picture":"3.png",
+                "name":"Lola",
                 "name":"Ivy",
                 "surname": "Lenhart"
             }
@@ -25,12 +28,10 @@
         "type":"heading",
         "display":"Files",
         "children":{
-            "type":"file-system",
             "ElementA":{
                 "type":"folder",
                 "display": "Images",
                 "children": {
-                    "type":"file-system",
                     "Image1":{
                         "type":"image",
                         "data":""
@@ -44,11 +45,11 @@
             "ElementB":{
                 "type":"folder",
                 "Document1":{
-                    "type":"paragraph",
+                    "type":"text",
                     "data":"sdlkfjs sldkfjs fsladkjfas"
                 },
                 "Document2":{
-                    "type":"paragraph",
+                    "type":"text",
                     "data":"sdfs dsfjendvdslvkaoe dflwejo cjkslfew;ds fdskfekfdsjf "
                 }
             }
@@ -58,9 +59,8 @@
         "type":"heading",
         "display":"About",
         "children":{
-            "type":"article",
             "Article1":{
-                "type":"paragraph",
+                "type":"text",
                 "data":"This is an article."
             }
         }
