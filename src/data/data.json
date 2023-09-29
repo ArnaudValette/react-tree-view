@@ -54,13 +54,18 @@
             },
             "ElementB":{
                 "type":"folder",
-                "Document1":{
-                    "type":"text",
-                    "data":"sdlkfjs sldkfjs fsladkjfas"
-                },
-                "Document2":{
-                    "type":"text",
-                    "data":"sdfs dsfjendvdslvkaoe dflwejo cjkslfew;ds fdskfekfdsjf "
+                "display": "Documents",
+                "children":{
+                    "Document1":{
+                        "title": "asdfsdaf",
+                        "type":"text",
+                        "data":"sdlkfjs sldkfjs fsladkjfas"
+                    },
+                    "Document2":{
+                        "title": "okjokj",
+                        "type":"text",
+                        "data":"sdfs dsfjendvdslvkaoe dflwejo cjkslfew;ds fdskfekfdsjf "
+                    }
                 }
             }
         }

@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useContext } from "react"
 import FloatingMenu from "../fancy-components/Floating-Menu"
 import { createPortal } from "react-dom"
 import { TreeStackContext } from "../App"
-import { MenuToggleState } from "../fancy-components/MenuToggle"
+import { MenuToggleState, ToggleStates } from "../fancy-components/MenuToggle"
 import { CloseButton } from "../fancy-components/Buttons"
 
 function TreeViewRoot(props: {
@@ -17,17 +17,17 @@ function TreeViewRoot(props: {
   const level = props.level || 0
   const customDispatcher = props.customDispatcher || {}
   const dispatcher = { ...baseDispatcher, ...customDispatcher }
+  function leave() {
+    if (level === 0) {
+      return props.state?.setToggle(0)
+    }
+    return popTreeStack(level)
+  }
 
   return (
     <>
       <div className="node-body">
-        <CloseButton
-          behavior={
-            level === 0
-              ? () => props.state?.setToggle(0)
-              : () => popTreeStack(level)
-          }
-        />
+        <CloseButton behavior={leave} />
         {nodes.map((entry, i) => (
           <NodeHandler
             pusher={pushTreeStack}
@@ -38,7 +38,7 @@ function TreeViewRoot(props: {
           />
         ))}
       </div>
-      <Portal>
+      <Portal condition={treeStack[level + 1]}>
         <NextTree level={level + 1} data={treeStack[level + 1]} />
       </Portal>
     </>
@@ -47,9 +47,11 @@ function TreeViewRoot(props: {
 
 export function NextTree({ level, data, state }: any) {
   return data ? (
-    <FloatingMenu className="EffectZone">
-      <TreeViewRoot level={level} data={data} state={state} />
-    </FloatingMenu>
+    <>
+      <FloatingMenu className={"EffectZone"}>
+        <TreeViewRoot level={level} data={data} state={state} />
+      </FloatingMenu>
+    </>
   ) : (
     <></>
   )
@@ -70,10 +72,24 @@ function NodeHandler({ Component, data, level, pusher }: any) {
   )
 }
 
-function Portal(props: PropsWithChildren) {
-  const element: Element | null = document.getElementById("portalFrame")
-  return element ? (
-    createPortal(<div className="portal">{props.children}</div>, element)
+function Portal(
+  props: PropsWithChildren & {
+    condition: any
+    loc?: string
+  }
+) {
+  const element: Element | null = document.getElementById(
+    props.loc || "portalFrame"
+  )
+
+  return element && props.condition ? (
+    createPortal(
+      <>
+        <div className={"blur"}></div>
+        <div className="portal">{props.children}</div>
+      </>,
+      element
+    )
   ) : (
     <></>
   )
@@ -83,16 +99,27 @@ function HeadingNode(props: any) {
   return <h1>{props.data.display}</h1>
 }
 function ProfileNode(props: any) {
-  return <></>
+  return (
+    <div className="profile">
+      <img src={props.data.picture} alt="" className="profile-picture" />
+      <span className="firstname">{props.data.name}</span>
+      <span className="surname">{props.data.surname}</span>
+    </div>
+  )
+}
+
+function ImageNode(props: any) {
+  return (
+    <div className="image-node-wrapper">
+      <img src={props.data.data} alt="" className="image-node" />
+    </div>
+  )
 }
 function FolderNode(props: any) {
-  return <></>
-}
-function ImageNode(props: any) {
-  return <></>
+  return <h2>{props.data.display}</h2>
 }
 function TextNode(props: any) {
-  return <></>
+  return <p>{props.data.title}</p>
 }
 const baseDispatcher = {
   heading: HeadingNode,
