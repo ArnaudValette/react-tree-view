@@ -3,8 +3,7 @@ import "./App.css"
 import FloatingMenu from "./fancy-components/Floating-Menu"
 import MenuToggle, { ToggleStates } from "./fancy-components/MenuToggle"
 import data from "./data/data.json"
-import TreeViewRoot from "./TreeView/TreeView"
-import { KeyObject } from "crypto"
+import TreeViewRoot, { NextTree } from "./TreeView/TreeView"
 
 export const TreeStackContext = createContext<TreeStackHookType>({
   treeStack: {},
@@ -27,10 +26,6 @@ function useTreeStack(): TreeStackHookType {
   const [ts, setTs] = useState<WrappedNode>({})
 
   const pushTreeStack: TreeStackPusher = (content, level) => {
-    /* const prev = ts[level as keyof typeof ts]
-     * if (prev && prev.id !== id) {
-     *   clearBranchWhoseRootIsAtLevel(level)
-     * } */
     const newTree = clearBranchWhoseRootIsAtLevel(level)
     setTs({ ...newTree, [level]: content })
   }
@@ -42,6 +37,7 @@ function useTreeStack(): TreeStackHookType {
   }
 
   const popTreeStack: TreeStackPopper = (level) => {
+    console.log(level)
     const newTree = clearBranchWhoseRootIsAtLevel(level)
     setTs({ ...newTree })
   }
@@ -55,9 +51,7 @@ function App() {
     <TreeStackContext.Provider value={treeStackHook}>
       <div className="App">
         <MenuToggle state={{ toggle, setToggle }}>
-          <FloatingMenu className="EffectZone" showFancyLabel>
-            <TreeViewRoot data={data} state={{ toggle, setToggle }} />
-          </FloatingMenu>
+          <NextTree level={0} data={data} state={{ toggle, setToggle }} />
         </MenuToggle>
       </div>
     </TreeStackContext.Provider>

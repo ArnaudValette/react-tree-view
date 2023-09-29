@@ -1,16 +1,9 @@
-import React, {
-  PropsWithChildren,
-  ReactChildren,
-  ReactPropTypes,
-  createContext,
-  useContext,
-  useReducer,
-  useState,
-} from "react"
+import React, { PropsWithChildren, useContext } from "react"
 import FloatingMenu from "../fancy-components/Floating-Menu"
 import { createPortal } from "react-dom"
 import { TreeStackContext } from "../App"
 import { MenuToggleState } from "../fancy-components/MenuToggle"
+import { CloseButton } from "../fancy-components/Buttons"
 
 function TreeViewRoot(props: {
   data: any
@@ -28,16 +21,13 @@ function TreeViewRoot(props: {
   return (
     <>
       <div className="node-body">
-        <div
-          className="close-button"
-          onClick={
+        <CloseButton
+          behavior={
             level === 0
               ? () => props.state?.setToggle(0)
               : () => popTreeStack(level)
           }
-        >
-          ✕
-        </div>
+        />
         {nodes.map((entry, i) => (
           <NodeHandler
             pusher={pushTreeStack}
@@ -48,16 +38,20 @@ function TreeViewRoot(props: {
           />
         ))}
       </div>
-      {treeStack[level + 1] ? (
-        <Portal>
-          <FloatingMenu className="EffectZone">
-            <TreeViewRoot level={level + 1} data={treeStack[level + 1]} />
-          </FloatingMenu>
-        </Portal>
-      ) : (
-        <></>
-      )}
+      <Portal>
+        <NextTree level={level + 1} data={treeStack[level + 1]} />
+      </Portal>
     </>
+  )
+}
+
+export function NextTree({ level, data, state }: any) {
+  return data ? (
+    <FloatingMenu className="EffectZone">
+      <TreeViewRoot level={level} data={data} state={state} />
+    </FloatingMenu>
+  ) : (
+    <></>
   )
 }
 
