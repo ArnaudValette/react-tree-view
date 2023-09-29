@@ -10,21 +10,34 @@ import React, {
 import FloatingMenu from "../fancy-components/Floating-Menu"
 import { createPortal } from "react-dom"
 import { TreeStackContext } from "../App"
+import { MenuToggleState } from "../fancy-components/MenuToggle"
 
 function TreeViewRoot(props: {
   data: any
+  state?: MenuToggleState
   customDispatcher?: any
   level?: number
 }) {
   const nodes: Array<any> = Object.entries(props.data)
-  const { treeStack, pushTreeStack } = useContext(TreeStackContext)
+  const { treeStack, pushTreeStack, popTreeStack } =
+    useContext(TreeStackContext)
   const level = props.level || 0
   const customDispatcher = props.customDispatcher || {}
   const dispatcher = { ...baseDispatcher, ...customDispatcher }
 
   return (
     <>
-      <div>
+      <div className="node-body">
+        <div
+          className="close-button"
+          onClick={
+            level === 0
+              ? () => props.state?.setToggle(0)
+              : () => popTreeStack(level)
+          }
+        >
+          ✕
+        </div>
         {nodes.map((entry, i) => (
           <NodeHandler
             pusher={pushTreeStack}

@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react"
 import "./App.css"
 import FloatingMenu from "./fancy-components/Floating-Menu"
-import MenuToggle from "./fancy-components/MenuToggle"
+import MenuToggle, { ToggleStates } from "./fancy-components/MenuToggle"
 import data from "./data/data.json"
 import TreeViewRoot from "./TreeView/TreeView"
 import { KeyObject } from "crypto"
@@ -9,15 +9,18 @@ import { KeyObject } from "crypto"
 export const TreeStackContext = createContext<TreeStackHookType>({
   treeStack: {},
   pushTreeStack: () => {},
+  popTreeStack: () => {},
 })
 
 type TreeNode = any
 type WrappedNode = { [key: string | number | symbol]: TreeNode }
 type TreeStackPusher = (content: WrappedNode, level: number) => void
+type TreeStackPopper = (level: number) => void
 
 type TreeStackHookType = {
   treeStack: WrappedNode
   pushTreeStack: TreeStackPusher
+  popTreeStack: TreeStackPopper
 }
 
 function useTreeStack(): TreeStackHookType {
@@ -37,17 +40,23 @@ function useTreeStack(): TreeStackHookType {
     const e = Object.entries(ts).filter(([key, _]) => parseInt(key) < level)
     return Object.fromEntries(e)
   }
-  return { treeStack: ts, pushTreeStack }
+
+  const popTreeStack: TreeStackPopper = (level) => {
+    const newTree = clearBranchWhoseRootIsAtLevel(level)
+    setTs({ ...newTree })
+  }
+  return { treeStack: ts, pushTreeStack, popTreeStack }
 }
 
 function App() {
-  const { treeStack, pushTreeStack } = useTreeStack()
+  const treeStackHook = useTreeStack()
+  const [toggle, setToggle] = useState<ToggleStates>(0)
   return (
-    <TreeStackContext.Provider value={{ treeStack, pushTreeStack }}>
+    <TreeStackContext.Provider value={treeStackHook}>
       <div className="App">
-        <MenuToggle>
+        <MenuToggle state={{ toggle, setToggle }}>
           <FloatingMenu className="EffectZone" showFancyLabel>
-            <TreeViewRoot data={data} />
+            <TreeViewRoot data={data} state={{ toggle, setToggle }} />
           </FloatingMenu>
         </MenuToggle>
       </div>

@@ -1,15 +1,24 @@
-import { PropsWithChildren, useState } from "react"
+import { Dispatch, PropsWithChildren, SetStateAction, useState } from "react"
 import "./MenuToggle.css"
 import FloatingMenu from "./Floating-Menu"
 
-enum ToggleStates {
+export enum ToggleStates {
   off = 0,
   load,
   on,
 }
 
-function MenuToggle(props: PropsWithChildren & { className?: string }) {
-  const [toggle, setToggle] = useState<ToggleStates>(0)
+export type MenuToggleState = {
+  toggle: ToggleStates
+  setToggle: Dispatch<SetStateAction<ToggleStates>>
+}
+function MenuToggle(
+  props: PropsWithChildren & {
+    state: MenuToggleState
+    className?: string
+  }
+) {
+  const { toggle, setToggle } = props.state
   function trig() {
     if (toggle === 1) {
       setToggle(2)

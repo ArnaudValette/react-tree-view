@@ -5,6 +5,19 @@ body{
     background: black;
     box-sizing: border-box;
 }
+
+.node-body{
+}
+.close-button{
+    position: absolute;
+    top: 0;
+    right: 5px;
+    opacity: .6;
+}
+.close-button:hover{
+    cursor: pointer;
+    opacity: .8;
+}
 .portal{
     position: absolute;
     top: 50vh;
@@ -30,6 +43,7 @@ body{
 .EffectZone{
     background: rgba(22,27,61,.3);
     border-radius: 10px;
+    user-select:none;
     border: 1px solid #565b8d;
     margin: auto auto;
     color: white;
@@ -37,6 +51,9 @@ body{
     font-size: 18pt;
     padding: 20px;
 
+}
+.EffectZone h1:hover{
+    cursor: pointer;
 }
 .EffectZone ul li{
     list-style-type: none;
