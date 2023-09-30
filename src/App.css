@@ -10,14 +10,12 @@
 }
 .blur-out{
     background: radial-gradient(circle, rgba(36,0,65,0.865983893557423) 13%, rgba(255,255,255,0) 100%);
-    background: yellow;
     position: absolute;
     width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
-    animation: bg-appear .3s;
-    animation-direction: reverse;
+    animation: bg-disappear .3s forwards;
 }
 body{
     overflow:hidden;
@@ -44,6 +42,11 @@ body{
     left: 50vw;
     transform: translate(-50%,-50%);
 }
+.portal-blur{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .App {
   text-align: center;
   position: absolute;
@@ -56,6 +59,14 @@ body{
   display: flex;
 }
 
+@keyframes bg-disappear{
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+}
 @keyframes bg-appear{
     from{
         opacity: 0;
@@ -92,8 +103,7 @@ body{
     display: flex;
     font-size: 18pt;
     padding: 20px;
-    animation: .3s appear forwards;
-    animation-direction: reverse;
+    animation: .3s disappear forwards;
 }
 .EffectZone h1:hover{
     cursor: pointer;
@@ -136,5 +146,16 @@ ul{
     }
     100%{
         transform: scale(1) translate(0px, 0px);
+    }
+}
+@keyframes disappear{
+    0%{
+        transform: scale(1) translate(0px, 0px);
+    }
+    50%{
+        transform:  rotate3d(0,1,0,90deg) translate(100px, 0px);
+    }
+    100%{
+        transform: rotate3d(0,1,0, 90deg) scale(0.0001) ;
     }
 }

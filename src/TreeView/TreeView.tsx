@@ -1,33 +1,32 @@
-import React, { PropsWithChildren, useContext } from "react"
+import React, {
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import FloatingMenu from "../fancy-components/Floating-Menu"
 import { createPortal } from "react-dom"
 import { TreeStackContext } from "../App"
-import { MenuToggleState, ToggleStates } from "../fancy-components/MenuToggle"
 import { CloseButton } from "../fancy-components/Buttons"
 
 function TreeViewRoot(props: {
   data: any
-  state?: MenuToggleState
+  transition?: Function
+  tr?: number | boolean
+  leave?: Function
   customDispatcher?: any
   level?: number
 }) {
   const nodes: Array<any> = Object.entries(props.data)
-  const { treeStack, pushTreeStack, popTreeStack } =
-    useContext(TreeStackContext)
+  const { treeStack, pushTreeStack } = useContext(TreeStackContext)
   const level = props.level || 0
   const customDispatcher = props.customDispatcher || {}
   const dispatcher = { ...baseDispatcher, ...customDispatcher }
-  function leave() {
-    if (level === 0) {
-      return props.state?.setToggle(0)
-    }
-    return popTreeStack(level)
-  }
 
   return (
     <>
       <div className="node-body">
-        <CloseButton behavior={leave} />
+        <CloseButton behavior={props.transition} />
         {nodes.map((entry, i) => (
           <NodeHandler
             pusher={pushTreeStack}
@@ -46,10 +45,42 @@ function TreeViewRoot(props: {
 }
 
 export function NextTree({ level, data, state }: any) {
+  const { popTreeStack } = useContext(TreeStackContext)
+  const [tr, setTr] = useState(0)
+  const [blurCond, setBC] = useState(true)
+
+  function leave() {
+    return tr === 0
+      ? null
+      : level === 0
+      ? clearBlur(() => state?.setToggle(0))
+      : clearBlur(() => popTreeStack(level))
+  }
+
+  function clearBlur(x: Function) {
+    setBC(false)
+    x()
+  }
+  function transition() {
+    setTr(1)
+  }
+
   return data ? (
     <>
-      <FloatingMenu className={"EffectZone"}>
-        <TreeViewRoot level={level} data={data} state={state} />
+      <Portal condition={blurCond && level !== 0} blur={true}>
+        <div className={tr ? "blur-out" : "blur"}></div>
+      </Portal>
+      <FloatingMenu
+        className={tr ? "EffectZone-out" : "EffectZone"}
+        onAnimationEnd={leave}
+      >
+        <TreeViewRoot
+          level={level}
+          data={data}
+          transition={transition}
+          leave={leave}
+          tr={tr}
+        />
       </FloatingMenu>
     </>
   ) : (
@@ -75,6 +106,7 @@ function NodeHandler({ Component, data, level, pusher }: any) {
 function Portal(
   props: PropsWithChildren & {
     condition: any
+    blur?: boolean
     loc?: string
   }
 ) {
@@ -85,8 +117,9 @@ function Portal(
   return element && props.condition ? (
     createPortal(
       <>
-        <div className={"blur"}></div>
-        <div className="portal">{props.children}</div>
+        <div className={props.blur ? "portal-blur" : "portal"}>
+          {props.children}
+        </div>
       </>,
       element
     )

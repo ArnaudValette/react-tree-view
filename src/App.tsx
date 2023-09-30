@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react"
 import "./App.css"
-import FloatingMenu from "./fancy-components/Floating-Menu"
 import MenuToggle, { ToggleStates } from "./fancy-components/MenuToggle"
 import data from "./data/data.json"
 import TreeViewRoot, { NextTree } from "./TreeView/TreeView"
@@ -37,7 +36,6 @@ function useTreeStack(): TreeStackHookType {
   }
 
   const popTreeStack: TreeStackPopper = (level) => {
-    console.log(level)
     const newTree = clearBranchWhoseRootIsAtLevel(level)
     setTs({ ...newTree })
   }

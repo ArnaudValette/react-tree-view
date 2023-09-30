@@ -9,7 +9,25 @@
     overflow: hidden;
     font-size: 18pt;
     transition: .5s background, .5s color;
-    user-select: none
+    user-select: none;
+    animation: grow .15s forwards;
+}
+
+@keyframes grow{
+    from{
+        transform: scale(0.1);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+@keyframes shrink{
+    from{
+        transform: scale(1) skew(0deg) ;
+    }
+    to{
+        transform: scale(0.1) skew(30deg);
+    }
 }
 
 .default-menu-toggle:hover{
@@ -22,7 +40,7 @@
 }
 
 .default-menu-toggle-animation{
-    animation: slideUp .25s ease-in-out, hless .25s ease-in-out;
+    animation: shrink .25s ease-in-out, hless .25s ease-in-out forwards;
     overflow: hidden;
 }
 
