@@ -4,6 +4,7 @@
     position: absolute;
     width: 100vw;
     height: 100vh;
+    opacity: 1;
     top: 0;
     left: 0;
     animation: bg-appear .3s;
@@ -12,10 +13,11 @@
     background: radial-gradient(circle, rgba(36,0,65,0.865983893557423) 13%, rgba(255,255,255,0) 100%);
     position: absolute;
     width: 100vw;
+    opacity: 0;
     height: 100vh;
     top: 0;
     left: 0;
-    animation: bg-disappear .3s forwards;
+    animation: bg-disappear .3s;
 }
 body{
     overflow:hidden;
@@ -91,7 +93,8 @@ body{
     display: flex;
     font-size: 18pt;
     padding: 20px;
-    animation: .3s appear forwards;
+    transform: scale(1) translate(0px, 0px);
+    animation: .3s appear;
 }
 .EffectZone-out{
     background: rgba(22,27,61,.3);
@@ -142,10 +145,10 @@ ul{
         transform: rotate3d(0,1,0, 90deg) scale(0.0001) ;
     }
     50%{
-        transform:  rotate3d(0,1,0,90deg) translate(100px, 0px);
+        transform:  rotate3d(0,1,0,90deg) ;
     }
     100%{
-        transform: scale(1) translate(0px, 0px);
+        transform: scale(1) ;
     }
 }
 @keyframes disappear{

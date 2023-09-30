@@ -10,7 +10,7 @@
     font-size: 18pt;
     transition: .5s background, .5s color;
     user-select: none;
-    animation: grow .15s forwards;
+    animation: grow .15s;
 }
 
 @keyframes grow{
